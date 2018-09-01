@@ -1,0 +1,428 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 11/01/2017 02:29:27 PM
+// Design Name: 
+// Module Name: miniprojectanna2
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module k_map(A,B,C,D,a,b,c,d,e,f,g);
+input A,B,C,D;
+output a,b,c,d,e,f,g;
+wire a,b,c,d,e,f,g;
+
+assign a=C|A|(~B&~D)|(B&D);
+assign b=~B | C&D | (~C&~D);
+assign c=~C | B | D;
+assign d=A | (~B&~D) | (~B&C) | (C&~D) | (B&~C&D);
+assign e= (~B&~D) | (C&~D);
+assign f= A | (~C&~D) | (B&~C) | (B&~D) ;
+assign g=A | (~B&C) | (C&~D) | (B&~C);
+endmodule
+
+
+
+
+
+
+module clock_conversion(clock,clk);
+
+    input clock;
+    output reg clk;
+
+    reg [32:0]counter;
+
+    initial
+    begin
+        counter=0;
+        clk=0;  
+    end
+ 
+    always@(posedge clock)
+    begin
+
+        if(counter==32'd62500)
+        begin
+            clk=~clk;
+            counter=0;
+        end
+
+
+        else
+        begin
+            counter=counter+1;
+        end
+
+
+    end
+
+
+endmodule
+
+
+module miniprojectanna2(
+    input clock,
+    input start_stop,
+    input reset,
+    input lap,
+    output reg a,
+    output reg b,
+    output reg c,
+    output reg d,
+    output reg e,
+    output reg f,
+    output reg g,
+    output reg ax,
+    output reg bx,
+    output reg cx,
+    output reg dx,
+    output reg ex,
+    output reg fx,
+    output reg gx,    
+    output c1,
+    output c2,
+    output c3,
+    output c4,
+    output c5,
+    output c6
+    );
+    wire clk;
+    reg [2:0] flag;
+    reg [2:0]flag1;
+    
+    reg [32:0] q1;
+    reg [3:0] x1;
+    reg [32:0] q2;    
+    reg [3:0] x2;
+    reg[32:0] q3;
+    reg [3:0] x3;
+    
+    
+    reg push_flag;
+    reg reset_flag;
+    reg [32:0] lap_flag; 
+    reg [32:0]toggle;
+    reg lap_checker=0;
+    reg lap_reset=0;
+    
+    reg [3:0]x4;
+    reg [3:0]x5;
+    reg [3:0]x6;
+    
+    wire y1,y2,y3,y4,y5,y6,y7;
+    wire z1,z2,z3,z4,z5,z6,z7;
+    wire w1,w2,w3,w4,w5,w6,w7;
+    
+    wire yx1,yx2,yx3,yx4,yx5,yx6,yx7;
+    wire zx1,zx2,zx3,zx4,zx5,zx6,zx7;
+    wire wx1,wx2,wx3,wx4,wx5,wx6,wx7;
+    
+    clock_conversion inst1 (clock,clk);
+    
+    
+    initial
+    begin
+        flag=0;
+        flag1=0;
+        q1=0;
+        q2=0;
+        q3=0;
+        x1=0;
+        x2=0;
+        x3=0;
+        x4=0;
+        x5=0;
+        x6=0;
+        push_flag=0;
+        reset_flag=0;
+        lap_flag=0;
+        toggle=0;
+    end
+    
+    always@(posedge (start_stop|reset|lap))
+    begin
+    
+        if(start_stop==1)
+        begin
+        push_flag=~push_flag;
+        reset_flag=0; 
+        if(lap_reset==1)
+        begin 
+        lap_checker=0;
+        end
+        end
+       
+        
+        if(reset==1)
+        begin
+        push_flag=1;
+        reset_flag=1;
+        lap_reset=1;
+        end
+        
+        
+        if(lap==1)
+        begin
+        lap_flag=lap_flag+1;
+        lap_reset=0;
+        lap_checker=1;
+        end
+    end
+    
+    always@(posedge clk)
+    begin
+        flag=flag+1;
+    
+    if(lap_flag-toggle==1)
+    begin
+    x4=x1;       //x1
+    x5=x2;    //x2
+    x6=x3;        // x3
+    toggle=toggle+1;
+    end
+        
+        if(reset_flag==1)
+        begin
+        flag=0;
+        q1=0;
+        q2=0;
+        q3=0;
+        x1=0;
+        x2=0;
+        x3=0;            
+        end
+        
+        
+        if(flag==2'd3)
+        begin
+        flag=0;
+        end
+        
+        flag1=flag1+1;
+        
+        if(flag1==2'd3)
+        begin
+        flag1=0;
+        end
+        
+    
+        if(flag==0)
+        begin
+        
+            if(q1==32'd500)
+            begin
+               
+                q1=0;
+               
+                if(x1==32'd9)
+                begin
+                    x1=0;                   
+                end    
+               
+                else if(push_flag==0)
+                begin
+                    x1=x1+1;
+                end
+               
+                
+            end  //end q1=500
+            
+            else if(push_flag==0)
+            begin
+                q1=q1+1;
+            end
+          
+        end                    // end of flag=0
+    
+    
+        else if (flag==1)
+        begin
+            if(q2==32'd5000)
+            begin
+                   
+                q2=0;
+                   
+                if(x2==32'd5)
+                begin
+                x2=0;                   
+                end    
+             
+                else if(push_flag==0)
+                begin
+                x2=x2+1;
+                end
+                    
+           end        // end of q=5000
+                
+                else if(push_flag==0)
+                begin
+                    q2=q2+1;
+                end          
+        end      // end of flag=1         
+        else if (flag==2'd2)
+        begin 
+                    if(q3==32'd30000)
+                    begin
+                           
+                        q3=0;
+                           
+                        if(x3==32'd9)
+                        begin
+                        x3=0;                   
+                        end    
+                           
+                        else if(push_flag==0)
+                        begin
+                        x3=x3+1;
+                        end
+                            
+                    end           // end of q=300000
+                        
+                        else if(push_flag==0)
+                        begin
+                            q3=q3+1;
+                        end     
+       end           // end of flag=2
+    end              // end of posedge.
+    
+   
+    
+   
+    k_map inst2 (x1[3],x1[2],x1[1],x1[0],y1,y2,y3,y4,y5,y6,y7);
+    k_map inst3 (x2[3],x2[2],x2[1],x2[0],z1,z2,z3,z4,z5,z6,z7);
+    k_map inst4 (x3[3],x3[2],x3[1],x3[0],w1,w2,w3,w4,w5,w6,w7);
+    
+    k_map inst5 (x4[3],x4[2],x4[1],x4[0],yx1,yx2,yx3,yx4,yx5,yx6,yx7);
+    k_map inst6 (x5[3],x5[2],x5[1],x5[0],zx1,zx2,zx3,zx4,zx5,zx6,zx7);
+    k_map inst7 (x6[3],x6[2],x6[1],x6[0],wx1,wx2,wx3,wx4,wx5,wx6,wx7); 
+    
+      
+    
+    assign c1=(~flag[0]&~flag[1])|(reset_flag);
+    assign c2=flag[0]|(reset_flag);
+    assign c3=flag[1]|(reset_flag);
+
+    assign c4=(~flag1[0]&~flag1[1])&(~lap_reset)&lap_checker;
+    assign c5=flag1[0]&(~lap_reset)&lap_checker;                       // flag1[0]&(lap_flag)
+    assign c6=flag1[1]&(~lap_reset)&lap_checker;
+
+    
+    always@(*)
+    begin
+    
+    if(flag==1&&reset_flag!=1)
+    begin
+     a=y1;
+     b=y2;
+     c=y3;
+     d=y4;
+     e=y5;
+     f=y6;
+     g=y7;
+    end                // end of flag==1
+    
+    else if(flag==0&&reset_flag!=1)
+    begin
+     a=z1;
+     b=z2;
+     c=z3;
+     d=z4;
+     e=z5;
+     f=z6;
+     g=z7;
+    
+    end                   // end of flag==0
+    else if(flag==2'd2&&reset_flag!=1)
+        begin
+         a=w1;
+         b=w2;
+         c=w3;
+         d=w4;
+         e=w5;
+         f=w6;
+         g=w7;
+        
+        end                // end of flag==2
+        
+        else if(reset_flag==1)
+                begin
+                 a=1;
+                 b=1;
+                 c=1;
+                 d=1;
+                 e=1;
+                 f=1;
+                 g=0;
+                
+                end   
+                
+    if(flag1==2'd0)
+    begin
+    ax=yx1;
+    bx=yx2;
+    cx=yx3;
+    dx=yx4;
+    ex=yx5;
+    fx=yx6;
+    gx=yx7;
+    end    
+    
+    else if(flag1==2'd1)
+    begin
+    ax=zx1;
+    bx=zx2;
+    cx=zx3;
+    dx=zx4;
+    ex=zx5;
+    fx=zx6;
+    gx=zx7;
+    end 
+    
+    else if(flag1==2'd2)
+    begin
+    ax=wx1;
+    bx=wx2;
+    cx=wx3;
+    dx=wx4;
+    ex=wx5;
+    fx=wx6;
+    gx=wx7;
+    end      
+
+                                   
+        
+    end            // end of always(*)
+    
+endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

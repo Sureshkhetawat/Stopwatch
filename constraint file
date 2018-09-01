@@ -1,0 +1,38 @@
+set_property -dict {PACKAGE_PIN V15 IOSTANDARD LVCMOS33 } [get_ports {a}];
+set_property -dict {PACKAGE_PIN W15 IOSTANDARD LVCMOS33 } [get_ports {b}];
+set_property -dict {PACKAGE_PIN T11 IOSTANDARD LVCMOS33 } [get_ports {c}];
+set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33 } [get_ports {d}];
+set_property -dict {PACKAGE_PIN W14 IOSTANDARD LVCMOS33 } [get_ports {e}];
+set_property -dict {PACKAGE_PIN Y14 IOSTANDARD LVCMOS33 } [get_ports {f}];
+set_property -dict {PACKAGE_PIN T12 IOSTANDARD LVCMOS33 } [get_ports {g}];
+
+set_property -dict {PACKAGE_PIN L16 IOSTANDARD LVCMOS33 } [get_ports {clock}];
+
+
+set_property -dict {PACKAGE_PIN T20 IOSTANDARD LVCMOS33 } [get_ports {c1}];
+set_property -dict {PACKAGE_PIN U20 IOSTANDARD LVCMOS33 } [get_ports {c2}];
+set_property -dict {PACKAGE_PIN V20 IOSTANDARD LVCMOS33 } [get_ports {c3}];
+
+set_property -dict {PACKAGE_PIN Y18 IOSTANDARD LVCMOS33 } [get_ports {c4}];
+set_property -dict {PACKAGE_PIN Y19 IOSTANDARD LVCMOS33 } [get_ports {c5}];
+set_property -dict {PACKAGE_PIN W18 IOSTANDARD LVCMOS33 } [get_ports {c6}];
+
+
+set_property -dict {PACKAGE_PIN R18 IOSTANDARD LVCMOS33 } [get_ports {start_stop}];
+set_property -dict {PACKAGE_PIN P16 IOSTANDARD LVCMOS33 } [get_ports {reset}];
+set_property -dict {PACKAGE_PIN V16 IOSTANDARD LVCMOS33 } [get_ports {lap}];
+
+
+
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets start_stop_IBUF] ;
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets reset_IBUF] ;
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets lap_IBUF] ;
+
+
+set_property -dict {PACKAGE_PIN T14 IOSTANDARD LVCMOS33 } [get_ports {ax}];
+set_property -dict {PACKAGE_PIN T15 IOSTANDARD LVCMOS33 } [get_ports {bx}];
+set_property -dict {PACKAGE_PIN P14 IOSTANDARD LVCMOS33 } [get_ports {cx}];
+set_property -dict {PACKAGE_PIN R14 IOSTANDARD LVCMOS33 } [get_ports {dx}];
+set_property -dict {PACKAGE_PIN U14 IOSTANDARD LVCMOS33 } [get_ports {ex}];
+set_property -dict {PACKAGE_PIN U15 IOSTANDARD LVCMOS33 } [get_ports {fx}];
+set_property -dict {PACKAGE_PIN V17 IOSTANDARD LVCMOS33 } [get_ports {gx}];
